@@ -1,66 +1,73 @@
-"""
-Data Analysis Techdegree
-Project 1 - A Number Guessing Game
---------------------------------
-"""
-
 # Import the random and statistics modules.
 
-# Create the start_game function.
-# Write your code inside this function.
-
-#   When the program starts, we want to:
-#   ------------------------------------
-#   1. Display an intro/welcome message to the player.
-#   2. Store a random number as the answer/solution.
-#   3. Continuously prompt the player for a guess.
-#     a. If the guess is greater than the solution, display to the player "It's lower".
-#     b. If the guess is less than the solution, display to the player "It's higher".
-
-#   4. Once the guess is correct, stop looping, inform the user they "Got it" and store the number of guesses it took in a list.
-#   5. Display the following data to the player
-#     a. How many attempts it took them to get the correct number in this game
-#     b. The mean of the saved attempts list
-#     c. The median of the saved attempts list
-#     d. The mode of the saved attempts list
-#   6. Prompt the player to play again
-#     a. If they decide to play again, start the game loop over.
-#     b. If they decide to quit, show them a goodbye message.
-
-# ( You can add more features/enhancements if you'd like to. )
+# Import necessary modules
 import random
 import statistics
 
-# Kick off the program by calling the start_game function.
-guess_list = []
-def start_game():
-    print("Welcome to the guessing game.")
-    input_number = int(input("the number between 0 and 100:"))
+# Create the start_game function.
+# This function contains the main logic for the number guessing game.
 
-    random_number = random.randint(1,100)
+# Define the start_game function
+def start_game():
+    # Display a welcome message to the player.
+    print("Welcome to the guessing game.")
+
+    # Ask the player to input a number between 1 and 100.
+    input_number = int(input("Guess the number between 1 and 100:"))
+
+    # Generate a random number between 1 and 100 as the solution.
+    random_number = random.randint(1, 100)
+
+    # Initialize the user's score.
     user_score = 0
+
+    # Create a list to store the player's guesses.
+    guess_list = []
+
+    # Start a loop to allow the player to make guesses.
     while input_number != random_number:
-        if input_number < 0 or input_number > 100:
+        # Check if the input is outside the valid range (1-100).
+        if input_number < 1 or input_number > 100:
             raise ValueError("Invalid number.")
+        # Provide hints to the player based on their guess.
         if input_number > random_number:
-            print("Too big")
+            print("It's lower")
         else:
-            print("Too small")
+            print("It's higher")
+        # Add the player's guess to the list.
         guess_list.append(input_number)
+        # Ask the player to enter another number.
         input_number = int(input("Please enter a number:"))
+
+    # When the correct guess is made, congratulate the player and increment their score.
     if input_number == random_number:
         user_score += 1
-        print("Congratulation! You Win!!!")
+        print("Congratulations! You Win!!!")
 
+    # Display game statistics to the player:
+    # a. Number of attempts to guess the correct number.
+    print(f"Attempts: {len(guess_list)}")
+    # b. Mean (average) of the saved attempts.
+    print(f"Mean: {statistics.mean(guess_list)}")
+    # c. Median of the saved attempts.
+    print(f"Median: {statistics.median(guess_list)}")
+    # d. Mode of the saved attempts.
+    print(f"Mode: {statistics.mode(guess_list)}")
 
-
-if __name__=='__main__':
+# Check if this script is the main entry point of the program.
+if __name__ == '__main__':
     try:
+        # Call the start_game function to begin the game.
         start_game()
+
+        # Ask the player if they want to play again.
         reply = input("Start again: Y or N")
         while reply.upper() == 'Y':
             start_game()
             reply = input("Start again: Y or N")
-        print("ByeBye! Thanks for playing.")
+
+        # Display a goodbye message when the player decides to quit.
+        print("Goodbye! Thanks for playing.")
+
     except ValueError:
-        print("Invalid range. Your input must between 1 and 100")
+        print("Invalid range. Your input must be between 1 and 100")
