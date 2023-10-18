@@ -28,6 +28,39 @@ Project 1 - A Number Guessing Game
 #     b. If they decide to quit, show them a goodbye message.
 
 # ( You can add more features/enhancements if you'd like to. )
-
+import random
+import statistics
 
 # Kick off the program by calling the start_game function.
+guess_list = []
+def start_game():
+    print("Welcome to the guessing game.")
+    input_number = int(input("the number between 0 and 100:"))
+
+    random_number = random.randint(1,100)
+    user_score = 0
+    while input_number != random_number:
+        if input_number < 0 or input_number > 100:
+            raise ValueError("Invalid number.")
+        if input_number > random_number:
+            print("Too big")
+        else:
+            print("Too small")
+        guess_list.append(input_number)
+        input_number = int(input("Please enter a number:"))
+    if input_number == random_number:
+        user_score += 1
+        print("Congratulation! You Win!!!")
+
+
+
+if __name__=='__main__':
+    try:
+        start_game()
+        reply = input("Start again: Y or N")
+        while reply.upper() == 'Y':
+            start_game()
+            reply = input("Start again: Y or N")
+        print("ByeBye! Thanks for playing.")
+    except ValueError:
+        print("Invalid range. Your input must between 1 and 100")
